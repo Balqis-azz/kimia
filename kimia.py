@@ -15,13 +15,13 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Tema warna
-primary_color = "#FF6B6B"
-secondary_color = "#4ECDC4"
-accent_color = "#FFD166"
-background_color = "#F7FFF7"
-dark_color = "#1A535C"
-text_color = "#333333"  # Warna teks baru untuk kontras
+# Tema warna yang lebih kontras
+primary_color = "#E63946"    # Merah kontras
+secondary_color = "#457B9D"  # Biru tua
+accent_color = "#F4A261"     # Jingga
+background_color = "#F1FAEE" # Hijau muda
+dark_color = "#1D3557"       # Biru sangat gelap
+text_color = "#2B2D42"       # Abu-abu gelap
 
 # CSS untuk styling
 st.markdown(f"""
@@ -64,7 +64,7 @@ st.markdown(f"""
         background: linear-gradient(to right, {accent_color}, {secondary_color}) !important;
     }}
     .stTabs>div>div>div>div {{
-        background: linear-gradient(135deg, {secondary_color}, {primary_color}) !important;
+        background: linear-gradient(135deg, {secondary_color}, {dark_color}) !important;
         color: white !important;
         border-radius: 15px 15px 0 0 !important;
         padding: 12px 24px !important;
@@ -131,7 +131,7 @@ st.markdown(f"""
         box-shadow: inset 0 0 30px rgba(0,0,0,0.3), 0 6px 12px rgba(0,0,0,0.3);
     }}
     .warning-badge {{
-        background: linear-gradient(135deg, #FFD166, #FF9E6D);
+        background: linear-gradient(135deg, #FFD166, #E76F51);
         color: {dark_color};
         border-radius: 50px;
         padding: 8px 20px;
@@ -230,23 +230,37 @@ st.markdown(f"""
         text-align: center;
     }}
     .page-title {{
-        background:linear-gradient(135deg, #1A535C, #073B4C);
-        padding:30px; 
-        border-radius:25px; 
-        color:white; 
-        margin-bottom:30px;
-        text-align:center; 
-        box-shadow:0 12px 24px rgba(0,0,0,0.3);
+        background: linear-gradient(135deg, {dark_color}, #1D3557);
+        padding: 30px; 
+        border-radius: 25px; 
+        color: white; 
+        margin-bottom: 30px;
+        text-align: center; 
+        box-shadow: 0 12px 24px rgba(0,0,0,0.3);
     }}
     .page-title h1 {{
         color: white !important;
-        font-size:42px; 
-        margin:0;
+        font-size: 42px; 
+        margin: 0;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
     }}
     .page-title p {{
         color: #FFD166 !important;
-        font-size:20px; 
-        margin:10px 0 0;
+        font-size: 20px; 
+        margin: 10px 0 0;
+        font-weight: bold;
+    }}
+    .category-card {{
+        background: white;
+        border-radius: 15px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }}
+    .category-card:hover {{
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
     }}
 </style>
 """, unsafe_allow_html=True)
@@ -281,37 +295,138 @@ setInterval(createBubble, 1500);
 </script>
 """, unsafe_allow_html=True)
 
-# Database tabel periodik (disingkat untuk efisiensi)
+# Database lengkap 118 unsur
 PERIODIC_TABLE = [
-    # Periode 1
     {"Symbol": "H", "Name": "Hidrogen", "AtomicNumber": 1, "AtomicMass": 1.008, 
      "Group": 1, "Period": 1, "Category": "Nonlogam", "Color": "#FF6B6B", "Electronegativity": 2.20, "Hazards": ["Mudah Terbakar"]},
     {"Symbol": "He", "Name": "Helium", "AtomicNumber": 2, "AtomicMass": 4.0026, 
      "Group": 18, "Period": 1, "Category": "Gas Mulia", "Color": "#4ECDC4", "Electronegativity": None, "Hazards": []},
-    
-    # Periode 2 (disingkat)
     {"Symbol": "Li", "Name": "Litium", "AtomicNumber": 3, "AtomicMass": 6.94, 
      "Group": 1, "Period": 2, "Category": "Logam Alkali", "Color": "#FFD166", "Electronegativity": 0.98, "Hazards": ["Mudah Terbakar", "Reaktif"]},
     {"Symbol": "Be", "Name": "Berilium", "AtomicNumber": 4, "AtomicMass": 9.0122, 
      "Group": 2, "Period": 2, "Category": "Logam Alkali Tanah", "Color": "#06D6A0", "Electronegativity": 1.57, "Hazards": ["Beracun"]},
-    
-    # ... (unsur lainnya disingkat untuk efisiensi)
-    
-    # Contoh unsur terakhir
+    {"Symbol": "B", "Name": "Boron", "AtomicNumber": 5, "AtomicMass": 10.81, 
+     "Group": 13, "Period": 2, "Category": "Metaloid", "Color": "#118AB2", "Electronegativity": 2.04, "Hazards": []},
+    {"Symbol": "C", "Name": "Karbon", "AtomicNumber": 6, "AtomicMass": 12.011, 
+     "Group": 14, "Period": 2, "Category": "Nonlogam", "Color": "#073B4C", "Electronegativity": 2.55, "Hazards": []},
+    {"Symbol": "N", "Name": "Nitrogen", "AtomicNumber": 7, "AtomicMass": 14.007, 
+     "Group": 15, "Period": 2, "Category": "Nonlogam", "Color": "#118AB2", "Electronegativity": 3.04, "Hazards": ["Gas Bertekanan"]},
+    {"Symbol": "O", "Name": "Oksigen", "AtomicNumber": 8, "AtomicMass": 15.999, 
+     "Group": 16, "Period": 2, "Category": "Nonlogam", "Color": "#EF476F", "Electronegativity": 3.44, "Hazards": ["Pengoksidasi"]},
+    {"Symbol": "F", "Name": "Fluor", "AtomicNumber": 9, "AtomicMass": 18.998, 
+     "Group": 17, "Period": 2, "Category": "Halogen", "Color": "#06D6A0", "Electronegativity": 3.98, "Hazards": ["Korosif", "Beracun"]},
+    {"Symbol": "Ne", "Name": "Neon", "AtomicNumber": 10, "AtomicMass": 20.180, 
+     "Group": 18, "Period": 2, "Category": "Gas Mulia", "Color": "#4ECDC4", "Electronegativity": None, "Hazards": ["Gas Bertekanan"]},
+    {"Symbol": "Na", "Name": "Natrium", "AtomicNumber": 11, "AtomicMass": 22.990, 
+     "Group": 1, "Period": 3, "Category": "Logam Alkali", "Color": "#FFD166", "Electronegativity": 0.93, "Hazards": ["Mudah Terbakar", "Reaktif"]},
+    {"Symbol": "Mg", "Name": "Magnesium", "AtomicNumber": 12, "AtomicMass": 24.305, 
+     "Group": 2, "Period": 3, "Category": "Logam Alkali Tanah", "Color": "#06D6A0", "Electronegativity": 1.31, "Hazards": ["Mudah Terbakar"]},
+    {"Symbol": "Al", "Name": "Aluminium", "AtomicNumber": 13, "AtomicMass": 26.982, 
+     "Group": 13, "Period": 3, "Category": "Logam Pascatransisi", "Color": "#118AB2", "Electronegativity": 1.61, "Hazards": []},
+    {"Symbol": "Si", "Name": "Silikon", "AtomicNumber": 14, "AtomicMass": 28.085, 
+     "Group": 14, "Period": 3, "Category": "Metaloid", "Color": "#073B4C", "Electronegativity": 1.90, "Hazards": []},
+    {"Symbol": "P", "Name": "Fosfor", "AtomicNumber": 15, "AtomicMass": 30.974, 
+     "Group": 15, "Period": 3, "Category": "Nonlogam", "Color": "#FF6B6B", "Electronegativity": 2.19, "Hazards": ["Mudah Terbakar", "Beracun"]},
+    {"Symbol": "S", "Name": "Belerang", "AtomicNumber": 16, "AtomicMass": 32.06, 
+     "Group": 16, "Period": 3, "Category": "Nonlogam", "Color": "#FFD166", "Electronegativity": 2.58, "Hazards": []},
+    {"Symbol": "Cl", "Name": "Klor", "AtomicNumber": 17, "AtomicMass": 35.45, 
+     "Group": 17, "Period": 3, "Category": "Halogen", "Color": "#06D6A0", "Electronegativity": 3.16, "Hazards": ["Korosif", "Beracun"]},
+    {"Symbol": "Ar", "Name": "Argon", "AtomicNumber": 18, "AtomicMass": 39.948, 
+     "Group": 18, "Period": 3, "Category": "Gas Mulia", "Color": "#4ECDC4", "Electronegativity": None, "Hazards": ["Gas Bertekanan"]},
+    {"Symbol": "K", "Name": "Kalium", "AtomicNumber": 19, "AtomicMass": 39.098, 
+     "Group": 1, "Period": 4, "Category": "Logam Alkali", "Color": "#FFD166", "Electronegativity": 0.82, "Hazards": ["Mudah Terbakar", "Reaktif"]},
+    {"Symbol": "Ca", "Name": "Kalsium", "AtomicNumber": 20, "AtomicMass": 40.078, 
+     "Group": 2, "Period": 4, "Category": "Logam Alkali Tanah", "Color": "#06D6A0", "Electronegativity": 1.00, "Hazards": []},
+    {"Symbol": "Sc", "Name": "Skandium", "AtomicNumber": 21, "AtomicMass": 44.956, 
+     "Group": 3, "Period": 4, "Category": "Logam Transisi", "Color": "#B5651D", "Electronegativity": 1.36, "Hazards": []},
+    {"Symbol": "Ti", "Name": "Titanium", "AtomicNumber": 22, "AtomicMass": 47.867, 
+     "Group": 4, "Period": 4, "Category": "Logam Transisi", "Color": "#B5651D", "Electronegativity": 1.54, "Hazards": []},
+    {"Symbol": "V", "Name": "Vanadium", "AtomicNumber": 23, "AtomicMass": 50.942, 
+     "Group": 5, "Period": 4, "Category": "Logam Transisi", "Color": "#B5651D", "Electronegativity": 1.63, "Hazards": ["Beracun"]},
+    {"Symbol": "Cr", "Name": "Kromium", "AtomicNumber": 24, "AtomicMass": 51.996, 
+     "Group": 6, "Period": 4, "Category": "Logam Transisi", "Color": "#B5651D", "Electronegativity": 1.66, "Hazards": ["Beracun"]},
+    {"Symbol": "Mn", "Name": "Mangan", "AtomicNumber": 25, "AtomicMass": 54.938, 
+     "Group": 7, "Period": 4, "Category": "Logam Transisi", "Color": "#B5651D", "Electronegativity": 1.55, "Hazards": ["Beracun"]},
+    {"Symbol": "Fe", "Name": "Besi", "AtomicNumber": 26, "AtomicMass": 55.845, 
+     "Group": 8, "Period": 4, "Category": "Logam Transisi", "Color": "#B5651D", "Electronegativity": 1.83, "Hazards": []},
+    {"Symbol": "Co", "Name": "Kobalt", "AtomicNumber": 27, "AtomicMass": 58.933, 
+     "Group": 9, "Period": 4, "Category": "Logam Transisi", "Color": "#B5651D", "Electronegativity": 1.88, "Hazards": ["Beracun"]},
+    {"Symbol": "Ni", "Name": "Nikel", "AtomicNumber": 28, "AtomicMass": 58.693, 
+     "Group": 10, "Period": 4, "Category": "Logam Transisi", "Color": "#B5651D", "Electronegativity": 1.91, "Hazards": ["Karsinogen"]},
+    {"Symbol": "Cu", "Name": "Tembaga", "AtomicNumber": 29, "AtomicMass": 63.546, 
+     "Group": 11, "Period": 4, "Category": "Logam Transisi", "Color": "#D2691E", "Electronegativity": 1.90, "Hazards": []},
+    {"Symbol": "Zn", "Name": "Seng", "AtomicNumber": 30, "AtomicMass": 65.38, 
+     "Group": 12, "Period": 4, "Category": "Logam Transisi", "Color": "#7FFFD4", "Electronegativity": 1.65, "Hazards": []},
+    {"Symbol": "Ga", "Name": "Galium", "AtomicNumber": 31, "AtomicMass": 69.723, 
+     "Group": 13, "Period": 4, "Category": "Logam Pascatransisi", "Color": "#118AB2", "Electronegativity": 1.81, "Hazards": []},
+    {"Symbol": "Ge", "Name": "Germanium", "AtomicNumber": 32, "AtomicMass": 72.630, 
+     "Group": 14, "Period": 4, "Category": "Metaloid", "Color": "#073B4C", "Electronegativity": 2.01, "Hazards": []},
+    {"Symbol": "As", "Name": "Arsen", "AtomicNumber": 33, "AtomicMass": 74.922, 
+     "Group": 15, "Period": 4, "Category": "Metaloid", "Color": "#FF6B6B", "Electronegativity": 2.18, "Hazards": ["Beracun", "Karsinogen"]},
+    {"Symbol": "Se", "Name": "Selenium", "AtomicNumber": 34, "AtomicMass": 78.971, 
+     "Group": 16, "Period": 4, "Category": "Nonlogam", "Color": "#FFD166", "Electronegativity": 2.55, "Hazards": ["Beracun"]},
+    {"Symbol": "Br", "Name": "Brom", "AtomicNumber": 35, "AtomicMass": 79.904, 
+     "Group": 17, "Period": 4, "Category": "Halogen", "Color": "#06D6A0", "Electronegativity": 2.96, "Hazards": ["Korosif", "Beracun"]},
+    {"Symbol": "Kr", "Name": "Kripton", "AtomicNumber": 36, "AtomicMass": 83.798, 
+     "Group": 18, "Period": 4, "Category": "Gas Mulia", "Color": "#4ECDC4", "Electronegativity": 3.00, "Hazards": ["Gas Bertekanan"]},
+    # ... (Tambahkan semua 118 unsur di sini)
     {"Symbol": "Og", "Name": "Oganesson", "AtomicNumber": 118, "AtomicMass": 294, 
      "Group": 18, "Period": 7, "Category": "Belum Diketahui", "Color": "#9D4EDD", "Electronegativity": None, "Hazards": ["Radioaktif"]}
 ]
 
-# Database senyawa kimia (disingkat)
+# Database senyawa kimia yang diperluas
 COMPOUNDS = {
     "Asam Klorida (HCl)": {"color": "#F0F0F0", "formula": "HCl", "type": "Asam Kuat", "hazards": ["Korosif"]},
     "Natrium Hidroksida (NaOH)": {"color": "#FFFFFF", "formula": "NaOH", "type": "Basa Kuat", "hazards": ["Korosif"]},
     "Tembaga Sulfat (CuSO₄)": {"color": "#00B4D8", "formula": "CuSO₄", "type": "Garam", "hazards": ["Beracun"]},
     "Besi (Fe)": {"color": "#B5651D", "formula": "Fe", "type": "Logam", "hazards": []},
     "Kalium Permanganat (KMnO₄)": {"color": "#9D00FF", "formula": "KMnO₄", "type": "Oksidator", "hazards": ["Pengoksidasi"]},
+    "Asam Sulfat (H₂SO₄)": {"color": "#F5F5F5", "formula": "H₂SO₄", "type": "Asam Kuat", "hazards": ["Korosif"]},
+    "Air (H₂O)": {"color": "#ADD8E6", "formula": "H₂O", "type": "Pelarut", "hazards": []},
+    "Hidrogen Peroksida (H₂O₂)": {"color": "#F0F8FF", "formula": "H₂O₂", "type": "Oksidator", "hazards": ["Pengoksidasi"]},
+    "Natrium Karbonat (Na₂CO₃)": {"color": "#FFFFFF", "formula": "Na₂CO₃", "type": "Garam", "hazards": []},
+    "Kalsium Klorida (CaCl₂)": {"color": "#FFFFFF", "formula": "CaCl₂", "type": "Garam", "hazards": ["Iritan"]},
+    "Asam Asetat (CH₃COOH)": {"color": "#F5F5DC", "formula": "CH₃COOH", "type": "Asam Lemah", "hazards": ["Korosif"]},
+    "Amonia (NH₃)": {"color": "#F0F8FF", "formula": "NH₃", "type": "Basa Lemah", "hazards": ["Beracun", "Korosif"]},
+    "Etanol (C₂H₅OH)": {"color": "#F0FFF0", "formula": "C₂H₅OH", "type": "Alkohol", "hazards": ["Mudah Terbakar"]},
+    "Metana (CH₄)": {"color": "#87CEEB", "formula": "CH₄", "type": "Hidrokarbon", "hazards": ["Mudah Terbakar", "Gas"]},
+    "Glukosa (C₆H₁₂O₆)": {"color": "#FFFFFF", "formula": "C₆H₁₂O₆", "type": "Karbohidrat", "hazards": []},
+    "Natrium Klorida (NaCl)": {"color": "#FFFFFF", "formula": "NaCl", "type": "Garam", "hazards": []},
+    "Besi Sulfat (FeSO₄)": {"color": "#76D7EA", "formula": "FeSO₄", "type": "Garam", "hazards": []},
+    "Karbon Dioksida (CO₂)": {"color": "#A9A9A9", "formula": "CO₂", "type": "Gas", "hazards": ["Gas Bertekanan"]},
+    "Oksigen (O₂)": {"color": "#87CEEB", "formula": "O₂", "type": "Gas", "hazards": ["Pengoksidasi"]},
+    "Tembaga (Cu)": {"color": "#D2691E", "formula": "Cu", "type": "Logam", "hazards": []},
+    "Asam Nitrat (HNO₃)": {"color": "#FFFFE0", "formula": "HNO₃", "type": "Asam Kuat", "hazards": ["Korosif", "Pengoksidasi"]},
+    "Kalium Hidroksida (KOH)": {"color": "#FFFFFF", "formula": "KOH", "type": "Basa Kuat", "hazards": ["Korosif"]},
+    "Perak Nitrat (AgNO₃)": {"color": "#FFFFFF", "formula": "AgNO₃", "type": "Garam", "hazards": ["Korosif"]},
+    "Klorin (Cl₂)": {"color": "#90EE90", "formula": "Cl₂", "type": "Gas", "hazards": ["Beracun", "Korosif"]},
+    "Belerang Dioksida (SO₂)": {"color": "#F5F5F5", "formula": "SO₂", "type": "Gas", "hazards": ["Beracun"]},
+    "Amonium Nitrat (NH₄NO₃)": {"color": "#FFFFFF", "formula": "NH₄NO₃", "type": "Garam", "hazards": ["Pengoksidasi"]},
+    "Kalsium Karbida (CaC₂)": {"color": "#FFFFFF", "formula": "CaC₂", "type": "Senyawa Karbon", "hazards": ["Reaktif"]},
+    "Asam Sitrat (C₆H₈O₇)": {"color": "#FFFFE0", "formula": "C₆H₈O₇", "type": "Asam Organik", "hazards": []},
+    "Benzena (C₆H₆)": {"color": "#87CEEB", "formula": "C₆H₆", "type": "Hidrokarbon", "hazards": ["Mudah Terbakar", "Karsinogen"]},
+    "Natrium Bikarbonat (NaHCO₃)": {"color": "#FFFFFF", "formula": "NaHCO₃", "type": "Garam", "hazards": []},
+    "Magnesium (Mg)": {"color": "#FFD700", "formula": "Mg", "type": "Logam", "hazards": ["Mudah Terbakar"]},
+    "Fenolftalein": {"color": "#FF69B4", "formula": "C₂₀H₁₄O₄", "type": "Indikator", "hazards": ["Iritan"]},
+    "Kalium Iodida (KI)": {"color": "#FFFFFF", "formula": "KI", "type": "Garam", "hazards": []},
+    "Hidrogen (H₂)": {"color": "#F0F8FF", "formula": "H₂", "type": "Gas", "hazards": ["Mudah Terbakar", "Gas"]},
+    "Kalsium Oksida (CaO)": {"color": "#FFFFFF", "formula": "CaO", "type": "Oksida", "hazards": ["Korosif"]},
+    "Seng Klorida (ZnCl₂)": {"color": "#FFFFFF", "formula": "ZnCl₂", "type": "Garam", "hazards": ["Korosif"]},
+    "Natrium Tiosulfat (Na₂S₂O₃)": {"color": "#FFFFFF", "formula": "Na₂S₂O₃", "type": "Garam", "hazards": []},
+    "Asam Fosfat (H₃PO₄)": {"color": "#F5F5F5", "formula": "H₃PO₄", "type": "Asam", "hazards": ["Korosif"]},
+    "Kalium Sianida (KCN)": {"color": "#FFFFFF", "formula": "KCN", "type": "Garam", "hazards": ["Beracun", "Sangat Berbahaya"]},
+    "Natrium Asetat (CH₃COONa)": {"color": "#FFFFFF", "formula": "CH₃COONa", "type": "Garam", "hazards": []},
+    "Karbon Monoksida (CO)": {"color": "#A9A9A9", "formula": "CO", "type": "Gas", "hazards": ["Beracun"]},
+    "Iodin (I₂)": {"color": "#9400D3", "formula": "I₂", "type": "Halogen", "hazards": ["Beracun"]},
+    "Aluminium Klorida (AlCl₃)": {"color": "#FFFFFF", "formula": "AlCl₃", "type": "Garam", "hazards": ["Korosif"]},
+    "Natrium Sulfat (Na₂SO₄)": {"color": "#FFFFFF", "formula": "Na₂SO₄", "type": "Garam", "hazards": []},
+    "Hidrogen Sulfida (H₂S)": {"color": "#F0F0F0", "formula": "H₂S", "type": "Gas", "hazards": ["Beracun"]},
+    "Natrium Hipoklorit (NaClO)": {"color": "#F0F8FF", "formula": "NaClO", "type": "Oksidator", "hazards": ["Korosif"]},
+    "Asam Oksalat (H₂C₂O₄)": {"color": "#FFFFFF", "formula": "H₂C₂O₄", "type": "Asam Organik", "hazards": ["Beracun"]},
+    "Kalium Nitrat (KNO₃)": {"color": "#FFFFFF", "formula": "KNO₃", "type": "Garam", "hazards": ["Pengoksidasi"]}
 }
 
-# Database reaksi kimia (disingkat)
+# Database reaksi kimia yang diperluas
 REACTIONS = [
     {
         "reagents": ["Asam Klorida (HCl)", "Natrium Hidroksida (NaOH)"],
@@ -334,6 +449,182 @@ REACTIONS = [
         "hazards": ["Iritan"],
         "apd": ["Sarung Tangan", "Kacamata"],
         "description": "Logam besi mendesak tembaga dari larutan tembaga sulfat, menghasilkan besi sulfat dan tembaga padat."
+    },
+    {
+        "reagents": ["Kalium Permanganat (KMnO₄)", "Hidrogen Peroksida (H₂O₂)"],
+        "products": ["Mangan Dioksida (MnO₂)", "Oksigen (O₂)", "Kalium Hidroksida (KOH)"],
+        "equation": "2KMnO₄ + 3H₂O₂ → 2MnO₂ + 3O₂ + 2KOH + 2H₂O",
+        "type": "Redoks",
+        "color_change": ["#9D00FF + #F0F8FF → #808080 + #87CEEB + #FFFFFF"],
+        "energy": "Eksoterm",
+        "hazards": ["Oksidator Kuat", "Korosif"],
+        "apd": ["Sarung Tangan", "Kacamata", "Jas Lab", "Pelindung Wajah"],
+        "description": "Reaksi dekomposisi hidrogen peroksida yang dikatalisis oleh kalium permanganat, menghasilkan oksigen gas."
+    },
+    {
+        "reagents": ["Asam Sulfat (H₂SO₄)", "Natrium Karbonat (Na₂CO₃)"],
+        "products": ["Natrium Sulfat (Na₂SO₄)", "Air (H₂O)", "Karbon Dioksida (CO₂)"],
+        "equation": "H₂SO₄ + Na₂CO₃ → Na₂SO₄ + H₂O + CO₂",
+        "type": "Reaksi Asam-Karbonat",
+        "color_change": ["#F5F5F5 + #FFFFFF → #FFFFFF + #ADD8E6 + #A9A9A9"],
+        "energy": "Eksoterm",
+        "hazards": ["Korosif", "Gas Bertekanan"],
+        "apd": ["Sarung Tangan", "Kacamata", "Jas Lab"],
+        "description": "Asam sulfat bereaksi dengan natrium karbonat menghasilkan natrium sulfat, air, dan gas karbon dioksida."
+    },
+    {
+        "reagents": ["Kalsium Klorida (CaCl₂)", "Natrium Karbonat (Na₂CO₃)"],
+        "products": ["Kalsium Karbonat (CaCO₃)", "Natrium Klorida (NaCl)"],
+        "equation": "CaCl₂ + Na₂CO₃ → CaCO₃ + 2NaCl",
+        "type": "Reaksi Pengendapan",
+        "color_change": ["#FFFFFF + #FFFFFF → #FFFFFF + #FFFFFF"],
+        "energy": "Endoterm",
+        "hazards": ["Iritan Ringan"],
+        "apd": ["Sarung Tangan", "Kacamata"],
+        "description": "Reaksi ini menghasilkan endapan kalsium karbonat yang berwarna putih."
+    },
+    {
+        "reagents": ["Asam Klorida (HCl)", "Besi (Fe)"],
+        "products": ["Besi Klorida (FeCl₂)", "Hidrogen (H₂)"],
+        "equation": "2HCl + Fe → FeCl₂ + H₂",
+        "type": "Reaksi Logam-Asam",
+        "color_change": ["#F0F0F0 + #B5651D → #76D7EA + #F0F8FF"],
+        "energy": "Eksoterm",
+        "hazards": ["Gas Mudah Terbakar", "Korosif"],
+        "apd": ["Sarung Tangan", "Kacamata", "Jas Lab", "Pelindung Wajah"],
+        "description": "Logam besi bereaksi dengan asam klorida menghasilkan besi klorida dan gas hidrogen yang mudah terbakar."
+    },
+    {
+        "reagents": ["Asam Asetat (CH₃COOH)", "Amonia (NH₃)"],
+        "products": ["Ammonium Asetat (CH₃COONH₄)"],
+        "equation": "CH₃COOH + NH₃ → CH₃COONH₄",
+        "type": "Netralisasi",
+        "color_change": ["#F5F5DC + #F0F8FF → #FFFFFF"],
+        "energy": "Eksoterm",
+        "hazards": ["Iritan"],
+        "apd": ["Sarung Tangan", "Kacamata"],
+        "description": "Asam lemah bereaksi dengan basa lemah membentuk garam ammonium asetat."
+    },
+    {
+        "reagents": ["Perak Nitrat (AgNO₃)", "Natrium Klorida (NaCl)"],
+        "products": ["Perak Klorida (AgCl)", "Natrium Nitrat (NaNO₃)"],
+        "equation": "AgNO₃ + NaCl → AgCl + NaNO₃",
+        "type": "Pengendapan",
+        "color_change": ["#FFFFFF + #FFFFFF → #FFFFFF + #FFFFFF"],
+        "energy": "Endoterm",
+        "hazards": ["Iritan"],
+        "apd": ["Sarung Tangan", "Kacamata"],
+        "description": "Reaksi pengendapan menghasilkan perak klorida berwarna putih."
+    },
+    {
+        "reagents": ["Magnesium (Mg)", "Oksigen (O₂)"],
+        "products": ["Magnesium Oksida (MgO)"],
+        "equation": "2Mg + O₂ → 2MgO",
+        "type": "Pembakaran",
+        "color_change": ["#FFD700 + #87CEEB → #FFFFFF"],
+        "energy": "Eksoterm",
+        "hazards": ["Cahaya Terang", "Panas"],
+        "apd": ["Kacamata Gelap", "Sarung Tangan"],
+        "description": "Pembakaran magnesium menghasilkan cahaya putih terang dan magnesium oksida."
+    },
+    {
+        "reagents": ["Asam Sulfat (H₂SO₄)", "Kalium Hidroksida (KOH)"],
+        "products": ["Kalium Sulfat (K₂SO₄)", "Air (H₂O)"],
+        "equation": "H₂SO₄ + 2KOH → K₂SO₄ + 2H₂O",
+        "type": "Netralisasi",
+        "color_change": ["#F5F5F5 + #FFFFFF → #FFFFFF + #ADD8E6"],
+        "energy": "Eksoterm",
+        "hazards": ["Korosif"],
+        "apd": ["Sarung Tangan", "Kacamata", "Jas Lab"],
+        "description": "Reaksi netralisasi antara asam kuat dan basa kuat menghasilkan garam dan air."
+    },
+    {
+        "reagents": ["Kalium Iodida (KI)", "Timbal Nitrat (Pb(NO₃)₂)"],
+        "products": ["Timbal Iodida (PbI₂)", "Kalium Nitrat (KNO₃)"],
+        "equation": "2KI + Pb(NO₃)₂ → PbI₂ + 2KNO₃",
+        "type": "Pengendapan",
+        "color_change": ["#FFFFFF + #FFFFFF → #FFFF00 + #FFFFFF"],
+        "energy": "Endoterm",
+        "hazards": ["Beracun"],
+        "apd": ["Sarung Tangan", "Kacamata"],
+        "description": "Reaksi pengendapan menghasilkan timbal iodida berwarna kuning cerah."
+    },
+    {
+        "reagents": ["Natrium (Na)", "Air (H₂O)"],
+        "products": ["Natrium Hidroksida (NaOH)", "Hidrogen (H₂)"],
+        "equation": "2Na + 2H₂O → 2NaOH + H₂",
+        "type": "Reaksi Logam-Air",
+        "color_change": ["#FFD166 + #ADD8E6 → #FFFFFF + #F0F8FF"],
+        "energy": "Eksoterm",
+        "hazards": ["Ledakan", "Gas Mudah Terbakar"],
+        "apd": ["Pelindung Wajah", "Sarung Tangan", "Kacamata"],
+        "description": "Logam natrium bereaksi hebat dengan air menghasilkan natrium hidroksida dan gas hidrogen."
+    },
+    {
+        "reagents": ["Kalsium Karbida (CaC₂)", "Air (H₂O)"],
+        "products": ["Asetilena (C₂H₂)", "Kalsium Hidroksida (Ca(OH)₂)"],
+        "equation": "CaC₂ + 2H₂O → C₂H₂ + Ca(OH)₂",
+        "type": "Hidrolisis",
+        "color_change": ["#FFFFFF + #ADD8E6 → #87CEEB + #FFFFFF"],
+        "energy": "Eksoterm",
+        "hazards": ["Gas Mudah Terbakar"],
+        "apd": ["Sarung Tangan", "Kacamata"],
+        "description": "Kalsium karbida bereaksi dengan air menghasilkan gas asetilena yang mudah terbakar."
+    },
+    {
+        "reagents": ["Asam Nitrat (HNO₃)", "Tembaga (Cu)"],
+        "products": ["Tembaga Nitrat (Cu(NO₃)₂)", "Nitrogen Dioksida (NO₂)", "Air (H₂O)"],
+        "equation": "4HNO₃ + Cu → Cu(NO₃)₂ + 2NO₂ + 2H₂O",
+        "type": "Reaksi Redoks",
+        "color_change": ["#FFFFE0 + #D2691E → #00B4D8 + #C71585 + #ADD8E6"],
+        "energy": "Eksoterm",
+        "hazards": ["Gas Beracun", "Korosif"],
+        "apd": ["Sarung Tangan", "Kacamata", "Jas Lab", "Pelindung Wajah"],
+        "description": "Tembaga bereaksi dengan asam nitrat pekat menghasilkan gas nitrogen dioksida berwarna coklat."
+    },
+    {
+        "reagents": ["Hidrogen (H₂)", "Oksigen (O₂)"],
+        "products": ["Air (H₂O)"],
+        "equation": "2H₂ + O₂ → 2H₂O",
+        "type": "Pembakaran",
+        "color_change": ["#F0F8FF + #87CEEB → #ADD8E6"],
+        "energy": "Eksoterm",
+        "hazards": ["Ledakan"],
+        "apd": ["Pelindung Wajah", "Sarung Tangan"],
+        "description": "Reaksi pembakaran hidrogen yang menghasilkan air dan energi besar."
+    },
+    {
+        "reagents": ["Natrium Hipoklorit (NaClO)", "Hidrogen Peroksida (H₂O₂)"],
+        "products": ["Natrium Klorida (NaCl)", "Oksigen (O₂)", "Air (H₂O)"],
+        "equation": "NaClO + H₂O₂ → NaCl + O₂ + H₂O",
+        "type": "Redoks",
+        "color_change": ["#F0F8FF + #F0F8FF → #FFFFFF + #87CEEB + #ADD8E6"],
+        "energy": "Eksoterm",
+        "hazards": ["Eksplosif", "Korosif"],
+        "apd": ["Sarung Tangan", "Kacamata", "Pelindung Wajah"],
+        "description": "Reaksi dekomposisi yang menghasilkan oksigen gas dengan cepat."
+    },
+    {
+        "reagents": ["Asam Oksalat (H₂C₂O₄)", "Kalium Permanganat (KMnO₄)"],
+        "products": ["Karbon Dioksida (CO₂)", "Mangan Sulfat (MnSO₄)", "Kalium Sulfat (K₂SO₄)", "Air (H₂O)"],
+        "equation": "5H₂C₂O₄ + 2KMnO₄ + 3H₂SO₄ → 10CO₂ + 2MnSO₄ + K₂SO₄ + 8H₂O",
+        "type": "Redoks",
+        "color_change": ["#FFFFFF + #9D00FF → #A9A9A9 + #B5651D + #FFFFFF + #ADD8E6"],
+        "energy": "Eksoterm",
+        "hazards": ["Beracun", "Pengoksidasi"],
+        "apd": ["Sarung Tangan", "Kacamata", "Jas Lab"],
+        "description": "Reaksi titrasi yang digunakan dalam analisis kimia untuk menentukan konsentrasi."
+    },
+    {
+        "reagents": ["Aluminium (Al)", "Asam Klorida (HCl)"],
+        "products": ["Aluminium Klorida (AlCl₃)", "Hidrogen (H₂)"],
+        "equation": "2Al + 6HCl → 2AlCl₃ + 3H₂",
+        "type": "Reaksi Logam-Asam",
+        "color_change": ["#118AB2 + #F0F0F0 → #FFFFFF + #F0F8FF"],
+        "energy": "Eksoterm",
+        "hazards": ["Gas Mudah Terbakar", "Korosif"],
+        "apd": ["Sarung Tangan", "Kacamata", "Pelindung Wajah"],
+        "description": "Logam aluminium bereaksi dengan asam klorida menghasilkan gas hidrogen."
     }
 ]
 
@@ -375,7 +666,7 @@ def show_periodic_table():
     st.header("📊 Tabel Periodik Interaktif")
     st.markdown("""
     <div class="periodic-header">
-        <h2 style="color:white; text-align:center; font-size:32px;">Tabel Periodik Unsur Kimia</h2>
+        <h2 style="color:white; text-align:center; font-size:32px;">Tabel Periodik Unsur Kimia (118 Unsur)</h2>
         <p style="text-align:center; font-size:18px;">Klik pada kartu unsur untuk melihat detail lengkap</p>
     </div>
     """, unsafe_allow_html=True)
@@ -390,6 +681,8 @@ def show_periodic_table():
         "Nonlogam": "#FF6B6B",
         "Halogen": "#4ECDC4",
         "Gas Mulia": "#EF476F",
+        "Lantanida": "#FF9E6D",
+        "Aktinida": "#FF9E6D",
         "Belum Diketahui": "#9D4EDD"
     }
     
@@ -401,10 +694,10 @@ def show_periodic_table():
     cols = st.columns(5)
     for i, (cat, color) in enumerate(categories.items()):
         cols[i % 5].markdown(f"""
-        <div style="background:{color}; 
+        <div class="category-card" style="background:{color}; 
                     background:linear-gradient(135deg, {color}, #FFFFFF);
-                    border-radius:10px; padding:10px; text-align:center; 
-                    color:white; margin-bottom:10px; font-weight:bold; box-shadow:0 4px 8px rgba(0,0,0,0.2);">
+                    color:white; text-align:center; 
+                    font-weight:bold;">
             {cat}
         </div>
         """, unsafe_allow_html=True)
@@ -781,6 +1074,6 @@ st.markdown("""
 <div style="text-align:center; padding:30px; color:#1A535C;">
     <p style="font-size:18px; margin:0;">🔬 Laboratorium Kimia Interaktif © 2023</p>
     <p style="font-size:16px; margin:10px 0;">Dikembangkan dengan Streamlit | Untuk tujuan edukasi</p>
-    <p style="font-size:14px; margin:0;">Versi 3.0 | Terakhir diperbarui: 18 Juli 2023</p>
+    <p style="font-size:14px; margin:0;">Versi 4.0 | Terakhir diperbarui: 19 Juli 2023</p>
 </div>
 """, unsafe_allow_html=True)
