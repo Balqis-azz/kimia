@@ -539,4 +539,248 @@ def show_reaction_simulator():
         st.error("Tidak ada reaksi yang diketahui antara senyawa yang dipilih.")
         
     # Tampilkan daftar reaksi yang tersedia
-    with st.expander("📚 Da
+    with st.expander("📚 Daftar Reaksi yang Tersedia", expanded=True):
+        for i, r in enumerate(REACTIONS):
+            st.markdown(f"#### Reaksi {i+1}: {r['type']}")
+            st.markdown(f"**Persamaan:** {r['equation']}")
+            st.markdown(f"**Pereaksi:** {', '.join(r['reagents'])}")
+            st.markdown(f"**Produk:** {', '.join(r['products'])}")
+            st.markdown("---")
+
+# Fungsi untuk menampilkan informasi tambahan
+def show_additional_info():
+    st.header("📚 Ensiklopedia Kimia")
+    st.markdown("""
+    <div class="periodic-header">
+        <h2 style="color:white; text-align:center; font-size:32px;">Panduan Lengkap Kimia Dasar</h2>
+        <p style="text-align:center; font-size:18px;">Pelajari konsep-konsep dasar kimia dan eksperimen menarik</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Jenis-jenis reaksi kimia
+    st.subheader("🧪 Jenis-Jenis Reaksi Kimia")
+    reaction_types = [
+        {"name": "Sintesis", "emoji": "⚗️", "desc": "Dua atau lebih zat bergabung membentuk zat baru. Contoh: 2H₂ + O₂ → 2H₂O"},
+        {"name": "Dekomposisi", "emoji": "🧫", "desc": "Satu zat terurai menjadi dua atau lebih zat. Contoh: 2H₂O₂ → 2H₂O + O₂"},
+        {"name": "Pembakaran", "emoji": "🔥", "desc": "Reaksi dengan oksigen yang menghasilkan panas dan cahaya. Contoh: CH₄ + 2O₂ → CO₂ + 2H₂O"},
+        {"name": "Penggantian Tunggal", "emoji": "🔄", "desc": "Satu unsur menggantikan unsur lain dalam senyawa. Contoh: Zn + 2HCl → ZnCl₂ + H₂"},
+        {"name": "Penggantian Ganda", "emoji": "🔀", "desc": "Ion-ion dari dua senyawa saling bertukar. Contoh: AgNO₃ + NaCl → AgCl + NaNO₃"},
+        {"name": "Netralisasi", "emoji": "⚖️", "desc": "Asam dan basa bereaksi membentuk garam dan air. Contoh: HCl + NaOH → NaCl + H₂O"}
+    ]
+    
+    cols = st.columns(3)
+    for i, rtype in enumerate(reaction_types):
+        with cols[i % 3]:
+            st.markdown(f"""
+            <div class="element-card">
+                <div style="display:flex; align-items:center; margin-bottom:15px;">
+                    <span style="font-size:36px; margin-right:15px;">{rtype['emoji']}</span>
+                    <h3 style="margin:0;">{rtype['name']}</h3>
+                </div>
+                <p style="font-size:16px; color:{text_color};">{rtype['desc']}</p>
+            </div>
+            """, unsafe_allow_html=True)
+    
+    # Simbol bahaya (9 simbol)
+    st.subheader("⚠️ Simbol Bahaya Laboratorium (GHS)")
+    hazard_symbols = [
+        {"name": "Mudah Terbakar", "emoji": "🔥", "desc": "Bahan yang mudah menyala saat terkena api, panas, percikan api, atau sumber nyala lainnya"},
+        {"name": "Mudah Teroksidasi", "emoji": "⚡", "desc": "Bahan yang dapat menyebabkan atau memperparah kebakaran, umumnya menghasilkan panas saat kontak dengan zat lain"},
+        {"name": "Mudah Meledak", "emoji": "💥", "desc": "Bahan yang dapat meledak akibat reaksi kimia, menghasilkan gas panas dalam volume dan kecepatan tinggi"},
+        {"name": "Beracun", "emoji": "☠️", "desc": "Bahan yang dapat menyebabkan keracunan akut atau kronis, bahkan kematian jika terhirup, tertelan, atau terserap kulit"},
+        {"name": "Korosif", "emoji": "⚠️", "desc": "Bahan yang dapat merusak jaringan hidup dan material logam melalui reaksi kimia"},
+        {"name": "Gas di Bawah Tekanan", "emoji": "💨", "desc": "Gas yang disimpan dalam wadah bertekanan dan dapat meledak jika dipanaskan"},
+        {"name": "Toksik untuk Organ Target", "emoji": "🧬", "desc": "Bahan yang dapat menyebabkan kerusakan organ tertentu setelah paparan tunggal atau berulang"},
+        {"name": "Bahaya Kronis", "emoji": "🔄", "desc": "Bahan yang dapat menyebabkan efek kesehatan jangka panjang seperti kanker, kerusakan reproduksi, atau mutasi genetik"},
+        {"name": "Bahaya Lingkungan", "emoji": "🌍", "desc": "Bahan yang dapat menyebabkan efek merusak pada lingkungan perairan atau atmosfer"}
+    ]
+    
+    cols = st.columns(3)
+    for i, hazard in enumerate(hazard_symbols):
+        with cols[i % 3]:
+            st.markdown(f"""
+            <div class="element-card">
+                <div style="display:flex; align-items:center; margin-bottom:15px;">
+                    <span class="hazard-symbol">{hazard['emoji']}</span>
+                    <h3 style="margin:0;">{hazard['name']}</h3>
+                </div>
+                <p style="font-size:16px; color:{text_color};">{hazard['desc']}</p>
+            </div>
+            """, unsafe_allow_html=True)
+    
+    # Alat pelindung diri
+    st.subheader("🛡️ Alat Pelindung Diri (APD)")
+    apd_items = [
+        {"name": "Kacamata Keselamatan", "emoji": "👓", "desc": "Melindungi mata dari percikan bahan kimia"},
+        {"name": "Sarung Tangan", "emoji": "🧤", "desc": "Melindungi tangan dari kontak langsung bahan kimia"},
+        {"name": "Jas Lab", "emoji": "🥼", "desc": "Melindungi tubuh dan pakaian dari percikan bahan kimia"},
+        {"name": "Pelindung Wajah", "emoji": "🥽", "desc": "Melindungi seluruh wajah dari percikan berbahaya"},
+        {"name": "Masker Respirator", "emoji": "😷", "desc": "Melindungi sistem pernapasan dari uap berbahaya"},
+        {"name": "Sepatu Tertutup", "emoji": "👞", "desc": "Melindungi kaki dari tumpahan bahan kimia"}
+    ]
+    
+    cols = st.columns(3)
+    for i, apd in enumerate(apd_items):
+        with cols[i % 3]:
+            st.markdown(f"""
+            <div class="element-card">
+                <div style="display:flex; align-items:center; margin-bottom:15px;">
+                    <span style="font-size:36px; margin-right:15px;">{apd['emoji']}</span>
+                    <h3 style="margin:0;">{apd['name']}</h3>
+                </div>
+                <p style="font-size:16px; color:{text_color};">{apd['desc']}</p>
+            </div>
+            """, unsafe_allow_html=True)
+    
+    # Tips keselamatan
+    st.subheader("🔒 Tips Keselamatan Laboratorium")
+    safety_tips = [
+        "Selalu gunakan APD yang sesuai saat bekerja dengan bahan kimia",
+        "Kenali sifat dan bahaya bahan kimia sebelum menggunakannya",
+        "Jangan pernah mencicipi atau mencium bahan kimia secara langsung",
+        "Bekerja di dalam lemari asam saat menangani bahan berbahaya",
+        "Simpan bahan kimia sesuai dengan kelompok dan sifatnya",
+        "Bersihkan tumpahan segera dengan prosedur yang benar",
+        "Ketahui lokasi alat keselamatan (pemadam api, shower, eye wash)",
+        "Jangan bekerja sendirian di laboratorium",
+        "Baca dan pahami MSDS (Material Safety Data Sheet) sebelum menggunakan bahan kimia",
+        "Cuci tangan setelah bekerja di laboratorium"
+    ]
+    
+    for i, tip in enumerate(safety_tips):
+        st.markdown(f"""
+        <div class="element-card" style="padding:15px; margin-bottom:10px;">
+            <div style="display:flex; align-items:center;">
+                <span style="font-size:24px; margin-right:15px; color:{dark_color};">🔒</span>
+                <p style="margin:0; font-size:16px; color:{text_color};">{i+1}. {tip}</p>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+# Fungsi untuk menampilkan informasi PBK
+def show_chemical_safety():
+    st.header("🧪 Penanganan Bahan Kimia (PBK)")
+    st.markdown("""
+    <div class="periodic-header">
+        <h2 style="color:white; text-align:center; font-size:32px;">Pedoman Penyimpanan dan Kompatibilitas Bahan Kimia</h2>
+        <p style="text-align:center; font-size:18px;">Pelajari cara menyimpan bahan kimia dengan aman dan kelompok kompatibilitas</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.subheader("🏷️ Kelompok Penyimpanan Bahan Kimia")
+    storage_groups = [
+        {"name": "Asam Anorganik", "emoji": "🧪", "desc": "HCl, H₂SO₄, HNO₃, H₃PO₄. Simpan terpisah dari basa dan bahan organik."},
+        {"name": "Basa", "emoji": "🧴", "desc": "NaOH, KOH, NH₄OH. Simpan terpisah dari asam dan logam."},
+        {"name": "Pelarut Organik", "emoji": "💧", "desc": "Etanol, Aseton, Benzena. Simpan di lemari khusus bahan mudah terbakar."},
+        {"name": "Oksidator", "emoji": "🔥", "desc": "KMnO₄, H₂O₂, KClO₃. Simpan terpisah dari bahan reduktor dan mudah terbakar."},
+        {"name": "Logam Reaktif", "emoji": "⚙️", "desc": "Natrium, Kalium, Magnesium. Simpan dalam minyak mineral."},
+        {"name": "Gas Bertekanan", "emoji": "💨", "desc": "O₂, H₂, CO₂. Ikat silinder dengan aman dan simpan di area berventilasi."}
+    ]
+    
+    cols = st.columns(3)
+    for i, group in enumerate(storage_groups):
+        with cols[i % 3]:
+            st.markdown(f"""
+            <div class="element-card">
+                <div style="display:flex; align-items:center; margin-bottom:15px;">
+                    <span style="font-size:36px; margin-right:15px;">{group['emoji']}</span>
+                    <h3 style="margin:0;">{group['name']}</h3>
+                </div>
+                <p style="font-size:16px; color:{text_color};">{group['desc']}</p>
+            </div>
+            """, unsafe_allow_html=True)
+    
+    st.subheader("🔄 Tabel Kompatibilitas Bahan Kimia")
+    st.markdown("""
+    <p style="font-size:16px; margin-bottom:20px;">Tabel berikut menunjukkan kelompok bahan kimia yang dapat disimpan bersama dan yang harus dipisahkan:</p>
+    """, unsafe_allow_html=True)
+    
+    compatibility_data = {
+        "Kelompok": ["Asam Anorganik", "Basa", "Pelarut Organik", "Oksidator", "Logam Reaktif", "Gas Bertekanan"],
+        "Asam Anorganik": ["✅", "❌", "⚠️", "❌", "❌", "✅"],
+        "Basa": ["❌", "✅", "⚠️", "❌", "❌", "✅"],
+        "Pelarut Organik": ["⚠️", "⚠️", "✅", "❌", "❌", "⚠️"],
+        "Oksidator": ["❌", "❌", "❌", "✅", "❌", "❌"],
+        "Logam Reaktif": ["❌", "❌", "❌", "❌", "✅", "✅"],
+        "Gas Bertekanan": ["✅", "✅", "⚠️", "❌", "✅", "✅"]
+    }
+    
+    df = pd.DataFrame(compatibility_data)
+    st.dataframe(df, hide_index=True, use_container_width=True)
+    
+    st.subheader("📦 Prinsip Penyimpanan Aman")
+    storage_principles = [
+        "Simpan bahan kimia berdasarkan kelompok kompatibilitas, bukan berdasarkan abjad",
+        "Gunakan wadah sekunder untuk bahan korosif dan beracun",
+        "Beri label jelas dengan nama bahan, konsentrasi, tanggal pembuatan, dan simbol bahaya",
+        "Batasi jumlah bahan kimia yang disimpan di meja kerja",
+        "Simpan bahan mudah terbakar di lemari tahan api",
+        "Periksa kondisi wadah penyimpanan secara berkala",
+        "Simpan bahan yang tidak stabil di tempat gelap dan dingin",
+        "Gunakan sistem inventaris FIFO (First In First Out)",
+        "Sediakan material penyerap untuk penanganan tumpahan"
+    ]
+    
+    for i, principle in enumerate(storage_principles):
+        st.markdown(f"""
+        <div class="element-card" style="padding:15px; margin-bottom:10px;">
+            <div style="display:flex; align-items:center;">
+                <span style="font-size:24px; margin-right:15px; color:{dark_color};">📦</span>
+                <p style="margin:0; font-size:16px; color:{text_color};">{i+1}. {principle}</p>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.subheader("🧯 Tanggap Darurat")
+    emergency_measures = [
+        "Tumpahan kecil: Gunakan material penyerap dan sarung tangan",
+        "Tumpahan besar: Evakuasi area dan hubungi petugas tanggap darurat",
+        "Kontak kulit: Bilas dengan air mengalir minimal 15 menit",
+        "Kontak mata: Gunakan eye wash station selama 15 menit",
+        "Tertelan: Jangan dimuntahkan kecuali diinstruksikan profesional",
+        "Kebakaran kecil: Gunakan alat pemadam api yang sesuai",
+        "Kebakaran besar: Aktifkan alarm dan evakuasi"
+    ]
+    
+    for i, measure in enumerate(emergency_measures):
+        st.markdown(f"""
+        <div class="element-card" style="padding:15px; margin-bottom:10px;">
+            <div style="display:flex; align-items:center;">
+                <span style="font-size:24px; margin-right:15px; color:{dark_color};">🚨</span>
+                <p style="margin:0; font-size:16px; color:{text_color};">{i+1}. {measure}</p>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+# UI Utama
+st.markdown("""
+<div class="page-title">
+    <h1>🔬 Laboratorium Kimia Interaktif</h1>
+    <p>Jelajahi tabel periodik, simulasikan reaksi kimia, dan pelajari konsep kimia dengan cara menyenangkan</p>
+</div>
+""", unsafe_allow_html=True)
+
+# Tab navigasi
+tab1, tab2, tab3, tab4 = st.tabs(["📋 Tabel Periodik", "🧪 Simulator Reaksi", "📚 Ensiklopedia Kimia", "🛡️ Penanganan Bahan Kimia"])
+
+with tab1:
+    show_periodic_table()
+
+with tab2:
+    show_reaction_simulator()
+
+with tab3:
+    show_additional_info()
+
+with tab4:
+    show_chemical_safety()
+
+# Footer
+st.divider()
+st.markdown("""
+<div style="text-align:center; padding:30px; color:#1A535C;">
+    <p style="font-size:18px; margin:0;">🔬 Laboratorium Kimia Interaktif © 2023</p>
+    <p style="font-size:16px; margin:10px 0;">Dikembangkan dengan Streamlit | Untuk tujuan edukasi</p>
+    <p style="font-size:14px; margin:0;">Versi 3.0 | Terakhir diperbarui: 18 Juli 2023</p>
+</div>
+""", unsafe_allow_html=True)
